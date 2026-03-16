@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Agency::class);
     }
+
+    public function isInactive(): bool
+    {
+        return false;
+    }
 }

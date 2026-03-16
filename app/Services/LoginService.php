@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Modules\Auth\Exceptions\InvalidCredentials;
+use App\Exceptions\InvalidCredentials;
 
 class LoginService
 {
