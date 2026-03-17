@@ -47,6 +47,16 @@ return [
             'report' => false,
         ],
 
+        'public_uploads' => [
+        'driver' => 'local',
+        // This points directly to the 'public/uploads' directory in your project root
+        'root' => public_path('uploads'), 
+        // This sets the base URL for when you retrieve the file
+        'url' => env('APP_URL').'/uploads',
+        'visibility' => 'public',
+        'throw' => false,
+    ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

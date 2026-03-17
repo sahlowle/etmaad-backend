@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\TenderAttachmentController;
+use App\Http\Controllers\Api\TenderController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +14,9 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('users/me', [UserController::class, 'me']);
+
+    Route::apiResource('tenders', TenderController::class);
+    Route::post('tenders/{tender}/attachments', [TenderAttachmentController::class, 'upload']);
 });
 
 Route::middleware('guest')->group(function () {
