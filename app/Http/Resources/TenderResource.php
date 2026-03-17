@@ -32,7 +32,7 @@ class TenderResource extends JsonResource
             'requires_initial_guarantee' => (bool) $this->requires_initial_guarantee,
             'initial_guarantee_address' => $this->initial_guarantee_address,
             'final_guarantee_percentage' => $this->final_guarantee_percentage,
-            
+
             // Timestamps
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

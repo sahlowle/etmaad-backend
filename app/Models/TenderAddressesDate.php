@@ -11,7 +11,7 @@ class TenderAddressesDate extends Model
         'tender_id', 'inquiries_deadline', 'offers_deadline', 'offers_opening_date',
         'offers_examination_date', 'evaluation_duration_days', 'expected_award_date',
         'execution_start_date', 'qa_start_date', 'qa_response_deadline',
-        'offers_opening_location', 'opening_committee_members'
+        'offers_opening_location', 'opening_committee_members',
     ];
 
     protected $casts = [

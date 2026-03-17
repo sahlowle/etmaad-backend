@@ -9,7 +9,7 @@ class TenderBoq extends Model
 {
     protected $fillable = [
         'tender_id', 'table_name', 'serial_number', 'category', 'item_name',
-        'unit', 'quantity', 'description', 'specifications', 'is_mandatory_list_product'
+        'unit', 'quantity', 'description', 'specifications', 'is_mandatory_list_product',
     ];
 
     protected $casts = [

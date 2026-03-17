@@ -37,14 +37,14 @@ class StoreNewCompanyRequest extends BaseApiFormRequest
                     ->numbers()
                     ->symbols(),
             ],
-            //company
+            // company
             'company' => ['required', 'array'],
             'company.name' => ['required', 'string', 'max:255'],
             'company.email' => ['required', 'string', 'email', 'max:255', 'unique:companies,email'],
             'company.commercial_registration_number' => ['required', 'string', 'max:255', 'unique:companies,commercial_registration_number'],
             'company.phone' => ['required', 'string', 'max:255', 'unique:companies,phone'],
             'company.logo' => ['nullable', 'string', 'max:255'],
-            'company.website' => ['nullable', 'string', 'max:100','ur;'],
+            'company.website' => ['nullable', 'string', 'max:100', 'ur;'],
             'company.address' => ['nullable', 'string', 'max:255'],
         ];
     }

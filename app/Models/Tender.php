@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Tender extends Model
 {
@@ -12,7 +12,7 @@ class Tender extends Model
         'name', 'tender_number', 'reference_number', 'purpose', 'booklet_price',
         'status', 'execution_duration', 'requires_insurance', 'type',
         'tendering_status', 'government_entity', 'submission_method',
-        'requires_initial_guarantee', 'initial_guarantee_address', 'final_guarantee_percentage'
+        'requires_initial_guarantee', 'initial_guarantee_address', 'final_guarantee_percentage',
     ];
 
     protected $casts = [

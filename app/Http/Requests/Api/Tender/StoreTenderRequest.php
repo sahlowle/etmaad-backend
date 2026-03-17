@@ -80,12 +80,12 @@ final class StoreTenderRequest extends BaseApiFormRequest
             'boqs.*.is_mandatory_list_product' => ['boolean'],
 
             // Attachments (Tab 5) - Array of Objects
-            'attachments' => ['nullable', 'array','max:3'],
+            'attachments' => ['nullable', 'array', 'max:3'],
             'attachments.*' => [
                 'required',
                 Rule::file()
                     ->types(['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png'])
-                    ->max(2048) // 2MB (Value is in kilobytes: 2 * 1024 = 2048)
+                    ->max(2048), // 2MB (Value is in kilobytes: 2 * 1024 = 2048)
             ],
 
             // News (Tab 6)

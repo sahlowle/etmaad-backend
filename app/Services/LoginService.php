@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Exceptions\InvalidCredentials;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Exceptions\InvalidCredentials;
 
 class LoginService
 {

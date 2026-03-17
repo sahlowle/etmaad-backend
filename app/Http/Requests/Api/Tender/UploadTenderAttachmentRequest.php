@@ -26,12 +26,12 @@ final class UploadTenderAttachmentRequest extends BaseApiFormRequest
     public function rules(): array
     {
         return [
-            'attachments' => ['required', 'array','max:3'],
+            'attachments' => ['required', 'array', 'max:3'],
             'attachments.*' => [
                 'required',
                 Rule::file()
                     ->types(['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png'])
-                    ->max(2048) // 2MB (Value is in kilobytes: 2 * 1024 = 2048)
+                    ->max(2048), // 2MB (Value is in kilobytes: 2 * 1024 = 2048)
             ],
         ];
     }

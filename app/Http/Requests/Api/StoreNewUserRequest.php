@@ -35,7 +35,7 @@ class StoreNewUserRequest extends BaseApiFormRequest
                     ->letters()
                     ->numbers()
                     ->symbols(),
-                    // ->uncompromised(),
+                // ->uncompromised(),
             ],
         ];
     }

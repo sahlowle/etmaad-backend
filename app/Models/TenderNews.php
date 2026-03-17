@@ -9,7 +9,7 @@ class TenderNews extends Model
 {
     protected $fillable = [
         'tender_id', 'creation_date', 'updated_offers_opening_date',
-        'extension_notes', 'actual_award_date'
+        'extension_notes', 'actual_award_date',
     ];
 
     protected $casts = [

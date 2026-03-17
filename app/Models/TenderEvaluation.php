@@ -9,7 +9,7 @@ class TenderEvaluation extends Model
 {
     protected $fillable = [
         'tender_id', 'tech_level_1', 'tech_level_2', 'tech_level_3', 'technical_weight',
-        'fin_level_1', 'fin_level_2', 'fin_level_3', 'financial_weight'
+        'fin_level_1', 'fin_level_2', 'fin_level_3', 'financial_weight',
     ];
 
     public function tender(): BelongsTo

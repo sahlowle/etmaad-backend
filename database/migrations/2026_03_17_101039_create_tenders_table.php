@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('requires_initial_guarantee')->comment('Tab 1, Input 14: مطلوب ضمان ابتدائي');
             $table->string('initial_guarantee_address')->nullable()->comment('Tab 1, Input 15: عنوان الضمان الابتدائي');
             $table->string('final_guarantee_percentage')->nullable()->comment('Tab 1, Input 16: الضمان النهائي');
-            
+
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('tender_boqs', function (Blueprint $table) {
             $table->id()->comment('المعرف الفريد');
             $table->foreignId('tender_id')->constrained('tenders')->onDelete('cascade')->comment('معرف المنافسة');
-            
+
             $table->string('table_name')->nullable()->comment('Tab 4, Input 1: اسم الجدول');
             $table->integer('serial_number')->comment('Tab 4, Input 2: الرقم التسلسلي');
             $table->string('category')->comment('Tab 4, Input 3: الفئة');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description')->nullable()->comment('Tab 4, Input 7: وصف البند');
             $table->text('specifications')->nullable()->comment('Tab 4, Input 8: المواصفات');
             $table->boolean('is_mandatory_list_product')->default(false)->comment('Tab 4, Input 9: منتج من القائمة الإلزامية');
-            
+
             $table->timestamps();
         });
     }

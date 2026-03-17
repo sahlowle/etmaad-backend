@@ -9,7 +9,7 @@ class TenderClassification extends Model
 {
     protected $fillable = [
         'tender_id', 'classification_area', 'execution_location', 'details',
-        'scope', 'includes_supply', 'includes_maintenance'
+        'scope', 'includes_supply', 'includes_maintenance',
     ];
 
     protected $casts = [
