@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TenderClassification extends Model
+class TenderBoq extends Model
 {
     protected $fillable = [
-        'tender_id', 'classification_area', 'execution_location', 'details',
-        'scope', 'includes_supply', 'includes_maintenance'
+        'tender_id', 'table_name', 'serial_number', 'category', 'item_name',
+        'unit', 'quantity', 'description', 'specifications', 'is_mandatory_list_product'
     ];
 
     protected $casts = [
-        'includes_supply' => 'boolean',
-        'includes_maintenance' => 'boolean',
+        'quantity' => 'decimal:2',
+        'is_mandatory_list_product' => 'boolean',
     ];
 
     public function tender(): BelongsTo
