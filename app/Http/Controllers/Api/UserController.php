@@ -9,6 +9,6 @@ class UserController extends BaseApiController
 {
     public function me(Request $request): JsonResponse
     {
-        return $this->success($request->user());
+        return $this->successResponse(message: 'User data retrieved successfully', data: $request->user());
     }
 }
