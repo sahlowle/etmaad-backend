@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('final_guarantee_percentage')->nullable()->comment('Tab 1, Input 16: الضمان النهائي');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

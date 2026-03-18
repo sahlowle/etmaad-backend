@@ -18,7 +18,11 @@ final readonly class CreateUserAction
         return DB::transaction(function () use ($data): User {
             $data['type'] = UserTypeEnum::USER->value;
 
-            return User::create($data);
+            $user = User::create($data);
+
+            $user->assignRole($data['type']);
+
+            return $user;
         });
     }
 }

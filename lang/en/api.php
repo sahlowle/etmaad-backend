@@ -9,5 +9,6 @@ return [
         'updated' => 'Tender updated successfully.',
         'deleted' => 'Tender deleted successfully.',
         'not_found' => 'Tender not found.',
+        'retrieved' => 'Tenders retrieved successfully.',
     ],
 ];

@@ -17,6 +17,7 @@ final readonly class CreateCompanyAction
     public function handle(array $user, array $company): User
     {
         return DB::transaction(function () use ($user, $company): User {
+
             $user['type'] = UserTypeEnum::COMPANY->value;
 
             $user = User::create($user);
@@ -24,6 +25,8 @@ final readonly class CreateCompanyAction
             $company = Company::create($company);
 
             $company->users()->attach($user->id);
+
+            $user->assignRole($user['type']);
 
             return $user;
         });

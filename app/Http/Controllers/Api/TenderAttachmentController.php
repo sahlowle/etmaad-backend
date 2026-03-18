@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\Tender\DeleteTenderAttachmentsRequest;
 use App\Http\Requests\Api\Tender\UploadTenderAttachmentRequest;
 use App\Http\Resources\TenderAttachmentResource;
 use App\Models\Tender;
@@ -18,6 +19,16 @@ class TenderAttachmentController extends BaseApiController
             message: api_trans('success'),
             data: TenderAttachmentResource::collection($attachments),
             statusCode: 201
+        );
+    }
+
+    public function destroy(DeleteTenderAttachmentsRequest $request, Tender $tender, TenderService $tenderService): JsonResponse
+    {
+        $tenderService->deleteAttachment($tender, $request->validated('attachments_ids'));
+
+        return $this->successResponse(
+            message: api_trans('success'),
+            data: null,
         );
     }
 }
