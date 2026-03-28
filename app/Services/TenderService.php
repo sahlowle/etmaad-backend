@@ -19,8 +19,8 @@ class TenderService
             // ->with([
             //     'addressesAndDates', 'classification', 'boqs', 'attachments', 'news', 'evaluation',
             // ])
-            ->when($request->has('search'), function ($query) use ($request) {
-                $query->where('name', 'like', "%{$request->search}%");
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->whereLike("name", "%{$request->search}%");
             })
             ->paginate(10);
     }
