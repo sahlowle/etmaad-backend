@@ -122,32 +122,33 @@ return new class extends Migration
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
             ->forget(config('permission.cache.key'));
 
-        foreach (UserTypeEnum::toArray() as $type) {
-            Role::create(['name' => $type]);
-        }
+        $this->createRoles();
 
         $this->createAdmin();
 
-        // Role::createMany([
-        //     ['name' => 'admin'],
-        //     ['name' => 'company'],
-        //     ['name' => 'agency'],
-        //     ['name' => 'user'],
-        // ]);
+    }
+
+    public function createRoles()
+    {
+        foreach (UserTypeEnum::toArray() as $type) {
+            Role::create(['name' => $type]);
+        }
     }
 
     public function createAdmin()
     {
+        $adminRole = UserTypeEnum::ADMIN->value;
+
         $admin = User::create([
             'name' => 'Admin',
             'username' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
-            'type' => 'admin',
+            'type' => $adminRole,
             'email_verified_at' => now(),
         ]);
 
-        $admin->assignRole('admin');
+        $admin->assignRole($adminRole);
     }
 
     /**

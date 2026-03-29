@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\TenderStatusesEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,6 +24,7 @@ class TenderResource extends JsonResource
             'purpose' => $this->purpose,
             'booklet_price' => $this->booklet_price ? (float) $this->booklet_price : null,
             'status' => $this->status,
+            'status_label' => TenderStatusesEnum::getLabel($this->status),
             'execution_duration' => $this->execution_duration,
             'requires_insurance' => (bool) $this->requires_insurance,
             'type' => $this->type,

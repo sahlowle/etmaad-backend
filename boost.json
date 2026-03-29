@@ -1,0 +1,9 @@
+{
+    "agents": [
+        "vscode"
+    ],
+    "guidelines": true,
+    "packages": [
+        "spatie/laravel-permission"
+    ]
+}

@@ -10,5 +10,11 @@ return [
         'deleted' => 'Tender deleted successfully.',
         'not_found' => 'Tender not found.',
         'retrieved' => 'Tenders retrieved successfully.',
+
+        'pending' => 'Pending',
+        'draft' => 'Draft',
+        'published' => 'Published',
+        'closed' => 'Closed',
+        'cancelled' => 'Cancelled',
     ],
 ];

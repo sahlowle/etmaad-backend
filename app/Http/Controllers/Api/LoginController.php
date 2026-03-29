@@ -6,6 +6,7 @@ use App\Http\Requests\Api\LoginRequest;
 use App\Services\LoginService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class LoginController extends BaseApiController
 {
@@ -23,5 +24,22 @@ class LoginController extends BaseApiController
             ]
         );
 
+    }
+
+    public function sessions(Request $request): JsonResponse
+    {
+        return $this->successResponse(
+            'User sessions retrieved successfully',
+            $request->user()->logins()->get()
+        );
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return $this->successResponse(
+            'User logged out successfully'
+        );
     }
 }

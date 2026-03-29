@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\TenderStatusesEnum;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -52,5 +55,35 @@ class Tender extends Model
     public function evaluation(): HasOne
     {
         return $this->hasOne(TenderEvaluation::class);
+    }
+
+    #[Scope]
+    public function published(Builder $query): void
+    {
+        $query->where('status', TenderStatusesEnum::PUBLISHED->value);
+    }
+
+    #[Scope]
+    public function pending(Builder $query): void
+    {
+        $query->where('status', TenderStatusesEnum::PENDING->value);
+    }
+
+    #[Scope]
+    public function draft(Builder $query): void
+    {
+        $query->where('status', TenderStatusesEnum::DRAFT->value);
+    }
+
+    #[Scope]
+    public function closed(Builder $query): void
+    {
+        $query->where('status', TenderStatusesEnum::CLOSED->value);
+    }
+
+    #[Scope]
+    public function cancelled(Builder $query): void
+    {
+        $query->where('status', TenderStatusesEnum::CANCELLED->value);
     }
 }

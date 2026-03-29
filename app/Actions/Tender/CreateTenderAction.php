@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Tender;
 
+use App\Enums\TenderStatusesEnum;
 use App\Models\Tender;
 use App\Services\TenderService;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ final readonly class CreateTenderAction
     {
         return DB::transaction(function () use ($data) {
             // Create main Tender
+            $data['tender']['status'] = TenderStatusesEnum::PENDING->value;
             $tender = Tender::create($data['tender']);
 
             // Create One-to-One Relationships

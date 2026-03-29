@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\InvalidCredentials;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Jenssegers\Agent\Agent;
 
 class LoginService
 {
@@ -21,11 +22,19 @@ class LoginService
             throw new InvalidCredentials('Your account is inactive');
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken($this->getCurrentDevice())->plainTextToken;
 
         return [
             'token' => $token,
             'user' => $user,
         ];
+    }
+
+    public function getCurrentDevice(): string
+    {
+        $agent = new Agent;
+        $device = $agent->device();
+
+        return $device ?: 'unknown-device';
     }
 }
