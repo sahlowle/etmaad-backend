@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Api\BaseApiController;
 use App\Actions\Tender\CreateTenderAction;
 use App\Actions\Tender\UpdateTenderAction;
 use App\Http\Requests\Api\Tender\StoreTenderRequest;

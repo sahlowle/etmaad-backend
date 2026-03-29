@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
+use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\LoginRequest;
 use App\Services\LoginService;
 use App\Traits\ApiResponse;
