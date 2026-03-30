@@ -24,4 +24,9 @@ class Company extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class);
+    }
 }

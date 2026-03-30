@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api\Company;
 
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\Company\Settings\GetRequiredDocumentsRequest;
+use App\Http\Resources\ActivityResource;
 use App\Http\Resources\RequiredDocumentResource;
+use App\Models\Activity;
 use App\Models\RequiredDocument;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CompanySettingsController extends BaseApiController
 {
@@ -17,6 +20,16 @@ class CompanySettingsController extends BaseApiController
         return $this->successResponse(
             message: api_trans('success'),
             data: RequiredDocumentResource::collection($requiredDocuments)
+        );
+    }
+
+    public function getActivities(Request $request): JsonResponse
+    {
+        $activities = Activity::query()->get();
+
+        return $this->successResponse(
+            message: api_trans('success'),
+            data: ActivityResource::collection($activities)
         );
     }
 }

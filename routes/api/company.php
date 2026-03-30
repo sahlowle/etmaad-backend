@@ -9,6 +9,7 @@ Route::prefix('company')->middleware(['auth:sanctum', 'role:company'])->group(fu
 
     Route::prefix('settings')->controller(CompanySettingsController::class)->group(function () {
         Route::get('required-documents', 'getRequiredDocuments');
+        Route::get('activities', 'getActivities');
     });
 
 });

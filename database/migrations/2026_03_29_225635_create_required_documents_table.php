@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('required_documents', function (Blueprint $table) {
             $table->id();
-            $table->text('file_name');
+            $table->json('file_name');
             $table->tinyInteger('is_required')->default(0);
             $table->date('issue_date')->nullable();
             $table->date('expire_date')->nullable();
