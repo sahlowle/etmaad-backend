@@ -13,6 +13,6 @@ class BaseApiFormRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException($this->errorResponse('The given data was invalid.', 422, $validator->errors()));
+        throw new HttpResponseException($this->errorResponse($validator->errors()->first(), 422, $validator->errors()));
     }
 }

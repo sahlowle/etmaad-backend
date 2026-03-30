@@ -1,9 +1,6 @@
 {
     "agents": [
-        "vscode"
+        "copilot"
     ],
-    "guidelines": true,
-    "packages": [
-        "spatie/laravel-permission"
-    ]
+    "guidelines": true
 }

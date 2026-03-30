@@ -59,6 +59,7 @@ final class MakeApiRequest extends GeneratorCommand
             namespace {{ namespace }};
 
             use Illuminate\Contracts\Validation\ValidationRule;
+            use Illuminate\Validation\Rule;
             use App\Http\Requests\Api\BaseApiFormRequest;
 
             final class {{ class }} extends BaseApiFormRequest

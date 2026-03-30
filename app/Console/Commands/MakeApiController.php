@@ -77,13 +77,23 @@ class MakeApiController extends Command
             ? $this->resourceStub()
             : $this->plainStub();
 
-        $model = $this->option('model') ?? str_replace('Controller', '', $name);
+        // Split "Admin/SettingController" into segments
+        $segments = explode('/', $name);
+        $className = array_pop($segments);
+
+        // Build fully-qualified namespace
+        $namespace = 'App\\Http\\Controllers\\Api';
+        if (! empty($segments)) {
+            $namespace .= '\\'.implode('\\', $segments);
+        }
+
+        $model = $this->option('model') ?? str_replace('Controller', '', $className);
         $modelVar = lcfirst($model);
         $modelPlural = lcfirst($model).'s';
 
         return str_replace(
-            ['{{ name }}', '{{ model }}', '{{ modelVar }}', '{{ modelPlural }}'],
-            [$name,         $model,        $modelVar,         $modelPlural],
+            ['{{ namespace }}', '{{ name }}',  '{{ model }}', '{{ modelVar }}', '{{ modelPlural }}'],
+            [$namespace,        $className,    $model,         $modelVar,        $modelPlural],
             $stub
         );
     }
@@ -97,8 +107,9 @@ class MakeApiController extends Command
         return <<<PHP
         <?php
 
-        namespace App\Http\Controllers\Api;
+        namespace {{ namespace }};
 
+        use App\Http\Controllers\Api\BaseApiController;
         use Illuminate\Http\JsonResponse;
         use Illuminate\Http\Request;
 
@@ -114,8 +125,9 @@ class MakeApiController extends Command
         return <<<PHP
         <?php
 
-        namespace App\Http\Controllers\Api;
+        namespace {{ namespace }};
 
+        use App\Http\Controllers\Api\BaseApiController;
         use App\Models\{{ model }};
         use Illuminate\Http\JsonResponse;
         use Illuminate\Http\Request;

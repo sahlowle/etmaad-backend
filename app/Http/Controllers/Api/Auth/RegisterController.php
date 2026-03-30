@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Api\BaseApiController;
 use App\Actions\Auth\CreateCompanyAction;
 use App\Actions\Auth\CreateUserAction;
+use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\StoreNewCompanyRequest;
 use App\Http\Requests\Api\StoreNewUserRequest;
 use Illuminate\Http\JsonResponse;
