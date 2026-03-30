@@ -7,6 +7,7 @@ use App\Actions\Tender\UpdateTenderAction;
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\Tender\StoreTenderRequest;
 use App\Http\Requests\Api\Tender\UpdateTenderRequest;
+use App\Http\Requests\Api\Tender\UpdateTenderStatusRequest;
 use App\Http\Resources\TenderResource;
 use App\Models\Tender;
 use App\Services\TenderService;
@@ -58,11 +59,23 @@ class TenderController extends BaseApiController
 
     public function destroy(Tender $tender): JsonResponse
     {
-        // $tender->delete();
+        $tender->delete();
 
         return $this->successResponse(
             data: null,
             message: api_trans('tender.deleted'),
+        );
+    }
+
+    public function changeStatus(UpdateTenderStatusRequest $request, Tender $tender): JsonResponse
+    {
+        $tender->update([
+            'status' => $request->status,
+        ]);
+
+        return $this->successResponse(
+            data: new TenderResource($tender),
+            message: api_trans('tender.updated'),
         );
     }
 }

@@ -21,11 +21,15 @@ class Tender extends Model
         'requires_initial_guarantee', 'initial_guarantee_address', 'final_guarantee_percentage',
     ];
 
-    protected $casts = [
-        'requires_insurance' => 'boolean',
-        'requires_initial_guarantee' => 'boolean',
-        'booklet_price' => 'decimal:2',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'requires_insurance' => 'boolean',
+            'requires_initial_guarantee' => 'boolean',
+            'booklet_price' => 'decimal:2',
+            'status' => TenderStatusesEnum::class,
+        ];
+    }
 
     public function addressesAndDates(): HasOne
     {
@@ -85,5 +89,35 @@ class Tender extends Model
     public function cancelled(Builder $query): void
     {
         $query->where('status', TenderStatusesEnum::CANCELLED->value);
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->status->value === TenderStatusesEnum::PUBLISHED->value;
+    }
+
+    public function isNotPublished(): bool
+    {
+        return ! $this->isPublished();
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status->value === TenderStatusesEnum::PENDING->value;
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->status->value === TenderStatusesEnum::DRAFT->value;
+    }
+
+    public function isClosed(): bool
+    {
+        return $this->status->value === TenderStatusesEnum::CLOSED->value;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->status->value === TenderStatusesEnum::CANCELLED->value;
     }
 }

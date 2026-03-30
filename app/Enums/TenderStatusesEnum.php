@@ -34,7 +34,7 @@ enum TenderStatusesEnum: string
         };
     }
 
-    public static function getStatuses(): array
+    public static function values(): array
     {
         return [
             self::PENDING->value,

@@ -33,7 +33,7 @@ final class UpdateTenderRequest extends BaseApiFormRequest
             'tender.reference_number' => ['nullable', 'string', 'max:255'],
             'tender.purpose' => ['required', 'string'],
             'tender.booklet_price' => ['nullable', 'numeric', 'min:0'],
-            'tender.status' => ['required', 'string', 'max:255'],
+            // 'tender.status' => ['required', 'string', 'max:255'],
             'tender.execution_duration' => ['nullable', 'string', 'max:255'],
             'tender.requires_insurance' => ['required', 'boolean'],
             'tender.type' => ['required', 'string', 'max:255'],

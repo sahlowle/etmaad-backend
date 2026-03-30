@@ -19,4 +19,21 @@ class CompanyTenderController extends BaseApiController
             message: api_trans('tender.retrieved'),
         );
     }
+
+    public function show(Tender $tender): JsonResponse
+    {
+        if ($tender->isNotPublished()) {
+            return $this->errorResponse(
+                message: 'Not Found',
+                statusCode: 404
+            );
+        }
+
+        return $this->successResponse(
+            data: new TenderResource($tender->load([
+                'addressesAndDates', 'classification', 'boqs', 'attachments', 'news', 'evaluation',
+            ])),
+            message: api_trans('tender.retrieved'),
+        );
+    }
 }
