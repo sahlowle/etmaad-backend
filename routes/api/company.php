@@ -16,6 +16,8 @@ Route::prefix('company')->middleware(['auth:sanctum', 'role:company'])->group(fu
         Route::get('activities', 'getActivities');
         Route::get('governorates', 'getGovernorates');
         Route::get('governorates/{governorate}/cities', 'getCities');
+        Route::get('nationalities', 'getNationalities');
+        Route::get('company-types', 'getCompanyTypes');
     });
 
 });
