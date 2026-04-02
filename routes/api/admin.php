@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\Settings\ActivityController;
+use App\Http\Controllers\Api\Admin\Settings\CityController;
+use App\Http\Controllers\Api\Admin\Settings\CompanyTypeController;
+use App\Http\Controllers\Api\Admin\Settings\GovernorateController;
+use App\Http\Controllers\Api\Admin\Settings\NationalityController;
 use App\Http\Controllers\Api\Admin\Settings\RequiredDocumentController;
 use App\Http\Controllers\Api\Admin\TenderAttachmentController;
 use App\Http\Controllers\Api\Admin\TenderController;
@@ -17,6 +22,11 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(functi
 
     Route::prefix('settings')->group(function () {
         Route::apiResource('required-documents', RequiredDocumentController::class);
+        Route::apiResource('company-types', CompanyTypeController::class);
+        Route::apiResource('nationalities', NationalityController::class);
+        Route::apiResource('activities', ActivityController::class);
+        Route::apiResource('governorates', GovernorateController::class);
+        Route::apiResource('governorates.cities', CityController::class)->shallow();
     });
 
 });

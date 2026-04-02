@@ -18,11 +18,11 @@ if (! function_exists('api_trans')) {
 }
 
 if (! function_exists('generateSlug')) {
-    function generateSlug(string $text, string $tableName, string $column = 'slug'): string
+    function generateSlug(string $text, string $tableName, string $column = 'slug', ?int $id = null): string
     {
         $slug = Str::slug($text);
         $count = 1;
-        while (DB::table($tableName)->where($column, $slug)->exists()) {
+        while (DB::table($tableName)->where($column, $slug)->where('id', '!=', $id)->exists()) {
             $slug = $slug.'-'.$count;
             $count++;
         }

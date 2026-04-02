@@ -49,16 +49,26 @@ class MakeApiController extends Command
     {
         $name = $this->argument('name');
 
-        // Ensure it ends with "Controller"
-        if (! str_ends_with($name, 'Controller')) {
-            $name .= 'Controller';
+        // Normalize both \ and / to /
+        $name = str_replace('\\', '/', $name);
+
+        $segments = explode('/', $name);
+        $last = array_pop($segments);
+
+        if (! str_ends_with($last, 'Controller')) {
+            $last .= 'Controller';
         }
 
-        return $name;
+        $segments[] = $last;
+
+        return implode('/', $segments);
     }
 
     private function getControllerPath(string $name): string
     {
+        // Normalize just in case
+        $name = str_replace('\\', '/', $name);
+
         return app_path("Http/Controllers/Api/{$name}.php");
     }
 
@@ -77,7 +87,8 @@ class MakeApiController extends Command
             ? $this->resourceStub()
             : $this->plainStub();
 
-        // Split "Admin/SettingController" into segments
+        // Normalize and split segments
+        $name = str_replace('\\', '/', $name);
         $segments = explode('/', $name);
         $className = array_pop($segments);
 
@@ -92,8 +103,8 @@ class MakeApiController extends Command
         $modelPlural = lcfirst($model).'s';
 
         return str_replace(
-            ['{{ namespace }}', '{{ name }}',  '{{ model }}', '{{ modelVar }}', '{{ modelPlural }}'],
-            [$namespace,        $className,    $model,         $modelVar,        $modelPlural],
+            ['{{ namespace }}', '{{ name }}', '{{ model }}', '{{ modelVar }}', '{{ modelPlural }}'],
+            [$namespace,        $className,   $model,         $modelVar,        $modelPlural],
             $stub
         );
     }
@@ -105,76 +116,76 @@ class MakeApiController extends Command
     private function plainStub(): string
     {
         return <<<PHP
-        <?php
+            <?php
 
-        namespace {{ namespace }};
+            namespace {{ namespace }};
 
-        use App\Http\Controllers\Api\BaseApiController;
-        use Illuminate\Http\JsonResponse;
-        use Illuminate\Http\Request;
+            use App\Http\Controllers\Api\BaseApiController;
+            use Illuminate\Http\JsonResponse;
+            use Illuminate\Http\Request;
 
-        class {{ name }} extends BaseApiController
-        {
-            //
-        }
-        PHP;
+            class {{ name }} extends BaseApiController
+            {
+                //
+            }
+            PHP;
     }
 
     private function resourceStub(): string
     {
         return <<<PHP
-        <?php
+                    <?php
 
-        namespace {{ namespace }};
+                    namespace {{ namespace }};
 
-        use App\Http\Controllers\Api\BaseApiController;
-        use App\Models\{{ model }};
-        use Illuminate\Http\JsonResponse;
-        use Illuminate\Http\Request;
+                    use App\Http\Controllers\Api\BaseApiController;
+                    use App\Models\{{ model }};
+                    use Illuminate\Http\JsonResponse;
+                    use Illuminate\Http\Request;
 
-        class {{ name }} extends BaseApiController
-        {
-            public function index(): JsonResponse
-            {
-                \${{ modelPlural }} = {{ model }}::paginate(10);
+                    class {{ name }} extends BaseApiController
+                    {
+                        public function index(): JsonResponse
+                        {
+                            \${{ modelPlural }} = {{ model }}::paginate(10);
 
-                return \$this->paginated(\${{ modelPlural }});
-            }
+                            return \$this->paginated(\${{ modelPlural }});
+                        }
 
-            public function store(Request \$request): JsonResponse
-            {
-                \$validated = \$request->validate([
-                    //
-                ]);
+                        public function store(Request \$request): JsonResponse
+                        {
+                            \$validated = \$request->validate([
+                                //
+                            ]);
 
-                \${{ modelVar }} = {{ model }}::create(\$validated);
+                            \${{ modelVar }} = {{ model }}::create(\$validated);
 
-                return \$this->created(\${{ modelVar }});
-            }
+                            return \$this->created(\${{ modelVar }});
+                        }
 
-            public function show({{ model }} \${{ modelVar }}): JsonResponse
-            {
-                return \$this->success(\${{ modelVar }});
-            }
+                        public function show({{ model }} \${{ modelVar }}): JsonResponse
+                        {
+                            return \$this->success(\${{ modelVar }});
+                        }
 
-            public function update(Request \$request, {{ model }} \${{ modelVar }}): JsonResponse
-            {
-                \$validated = \$request->validate([
-                    //
-                ]);
+                        public function update(Request \$request, {{ model }} \${{ modelVar }}): JsonResponse
+                        {
+                            \$validated = \$request->validate([
+                                //
+                            ]);
 
-                \${{ modelVar }}->update(\$validated);
+                            \${{ modelVar }}->update(\$validated);
 
-                return \$this->success(\${{ modelVar }});
-            }
+                            return \$this->success(\${{ modelVar }});
+                        }
 
-            public function destroy({{ model }} \${{ modelVar }}): JsonResponse
-            {
-                \${{ modelVar }}->delete();
+                        public function destroy({{ model }} \${{ modelVar }}): JsonResponse
+                        {
+                            \${{ modelVar }}->delete();
 
-                return \$this->noContent();
-            }
-        }
-        PHP;
+                            return \$this->noContent();
+                        }
+                    }
+                    PHP;
     }
 }
