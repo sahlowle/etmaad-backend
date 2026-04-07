@@ -50,11 +50,11 @@ class StoreNewCompanyRequest extends BaseApiFormRequest
             'location_info.postal_code' => ['nullable', 'string'],
 
             // Step 3: الوثائق الرسمية
-            // 'documents' => ['required', 'array'],
-            // 'documents.file' => ['required', Rule::file()->types('pdf')->max(2018)],
-            // 'documents.file_name' => ['required', 'string'],
-            // 'documents.issue_date' => ['required', 'date'],
-            // 'documents.expiry_date' => ['required', 'date','after:documents.issue_date'],
+            'documents' => ['required', 'array'],
+            'documents.file' => ['required', Rule::file()->types('pdf')->max(2018)],
+            'documents.file_name' => ['required', 'string'],
+            'documents.issue_date' => ['required', 'date'],
+            'documents.expiry_date' => ['required', 'date', 'after:documents.issue_date'],
 
             // Step 4: التخصصات والنشاط التجاري
             'activities_ids' => ['required', 'array'],
