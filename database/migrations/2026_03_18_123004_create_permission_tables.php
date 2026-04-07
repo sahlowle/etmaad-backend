@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\UserTypeEnum;
+use App\Enums\UserRolesEnum;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -130,14 +130,14 @@ return new class extends Migration
 
     public function createRoles()
     {
-        foreach (UserTypeEnum::toArray() as $type) {
+        foreach (UserRolesEnum::values() as $type) {
             Role::create(['name' => $type]);
         }
     }
 
     public function createAdmin()
     {
-        $adminRole = UserTypeEnum::ADMIN->value;
+        $adminRole = UserRolesEnum::ADMIN->value;
 
         $admin = User::create([
             'name' => 'Admin',

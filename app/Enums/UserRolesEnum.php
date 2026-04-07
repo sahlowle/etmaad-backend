@@ -2,12 +2,12 @@
 
 namespace App\Enums;
 
-enum UserTypeEnum: string
+enum UserRolesEnum: string
 {
-    case USER = 'user';
     case ADMIN = 'admin';
-    case COMPANY = 'company';
     case AGENCY = 'agency';
+    case COMPANY_MANAGER = 'company_manager';
+    case COMPANY_EMPLOYEE = 'company_employee';
 
     public static function values(): array
     {

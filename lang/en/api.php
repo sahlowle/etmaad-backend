@@ -3,6 +3,8 @@
 return [
     'success' => 'Operation completed successfully.',
     'error' => 'Something went wrong. Please try again.',
+    'not_found' => 'Not found.',
+    'not_defined' => 'Not defined.',
 
     'tender' => [
         'created' => 'Tender created successfully.',

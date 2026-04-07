@@ -2,12 +2,12 @@
 
 namespace App\Enums;
 
-enum UserTypeEnum: string
+enum CompanyStatusesEnum: string
 {
-    case USER = 'user';
-    case ADMIN = 'admin';
-    case COMPANY = 'company';
-    case AGENCY = 'agency';
+    case PENDING = 'pending';
+    case ACTIVE = 'active';
+    case INACTIVE = 'inactive';
+    case REJECTED = 'rejected';
 
     public static function values(): array
     {

@@ -36,12 +36,6 @@ enum TenderStatusesEnum: string
 
     public static function values(): array
     {
-        return [
-            self::PENDING->value,
-            self::DRAFT->value,
-            self::PUBLISHED->value,
-            self::CLOSED->value,
-            self::CANCELLED->value,
-        ];
+        return array_map(fn ($case) => $case->value, self::cases());
     }
 }

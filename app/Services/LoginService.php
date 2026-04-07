@@ -1,26 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\Exceptions\InvalidCredentials;
+use App\Enums\UserStatusesEnum;
+use App\Exceptions\AccountBlockedException;
+use App\Exceptions\AccountInactiveException;
+use App\Exceptions\AccountPendingException;
+use App\Exceptions\InvalidCredentialsException;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Jenssegers\Agent\Agent;
 
-class LoginService
+final class LoginService
 {
+    public function __construct(
+        private readonly Request $request,
+    ) {}
+
     public function login(array $credentials): array
     {
-        $user = User::query()->where('username', $credentials['username'])->first();
-        $passwordValid = $user && Hash::check($credentials['password'], $user->password);
+        $user = User::query()
+            ->where('username', $credentials['username'])
+            ->first();
+
+        // Always hash-check to prevent timing attacks
+        $passwordValid = Hash::check(
+            $credentials['password'],
+            $user?->password ?? ''
+        );
 
         if (! $passwordValid) {
-            throw new InvalidCredentials;
+            throw new InvalidCredentialsException;
         }
 
-        if ($user->isInactive()) {
-            throw new InvalidCredentials('Your account is inactive');
-        }
+        $this->authenticate($user);
 
         $token = $user->createToken($this->getCurrentDevice())->plainTextToken;
 
@@ -30,11 +45,18 @@ class LoginService
         ];
     }
 
-    public function getCurrentDevice(): string
+    private function authenticate(User $user): void
     {
-        $agent = new Agent;
-        $device = $agent->device();
+        match ($user->status) {
+            UserStatusesEnum::ACTIVE => null,
+            UserStatusesEnum::PENDING => throw new AccountPendingException,
+            UserStatusesEnum::INACTIVE => throw new AccountInactiveException,
+            UserStatusesEnum::BLOCKED => throw new AccountBlockedException,
+        };
+    }
 
-        return $device ?: 'unknown-device';
+    private function getCurrentDevice(): string
+    {
+        return $this->request->userAgent() ?? 'unknown-device';
     }
 }
