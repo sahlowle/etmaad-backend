@@ -17,18 +17,32 @@ class CompanyService
         $attachmentRecords = [];
 
         foreach ($documents as $document) {
-            $file = $document['file'];
-            // Case 1: Direct file upload via multipart/form-data
+            $file = $document['file'] ?? null;
+
             if ($file instanceof UploadedFile) {
+                // Case 1: Direct upload (sync usage)
                 $path = $file->store('companies/documents', 'public_uploads');
 
-                $attachmentRecords[] = [
-                    'file_path' => $path,
-                    'file_name' => $document['file_name'],
-                    'issue_date' => $document['issue_date'],
-                    'expiry_date' => $document['expiry_date'],
-                ];
+            } elseif (! empty($document['temp_path'])) {
+                // Case 2: From queue job — move from temp to permanent
+                $permanentPath = 'companies/documents/'.basename($document['temp_path']);
+                Storage::disk('public_uploads')->writeStream(
+                    $permanentPath,
+                    Storage::disk('local')->readStream($document['temp_path'])
+                );
+                Storage::disk('local')->delete($document['temp_path']);
+                $path = $permanentPath;
+
+            } else {
+                continue; // skip invalid entries
             }
+
+            $attachmentRecords[] = [
+                'file_path' => $path,
+                'file_name' => $document['file_name'],
+                'issue_date' => $document['issue_date'],
+                'expiry_date' => $document['expiry_date'],
+            ];
         }
 
         return $company->documents()->createMany($attachmentRecords);

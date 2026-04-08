@@ -34,6 +34,8 @@ class RegisterController extends BaseApiController
 
         $companyData = $request->except('user');
 
+        // dd($companyData['documents'][0]);
+
         $user = $createCompanyAction->handle($userData, $companyData);
 
         $token = $user->createToken('auth-token')->plainTextToken;

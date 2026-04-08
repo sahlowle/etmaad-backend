@@ -36,11 +36,28 @@ final readonly class CreateCompanyAction
             $user->assignRole(UserRolesEnum::COMPANY_MANAGER->value);
 
             if (isset($companyData['documents'])) {
-                UploadCompanyDocumentsJob::dispatch($company, $companyData['documents'])
-                    ->afterCommit();
+                $this->uploadDocuments($company, $companyData['documents']);
             }
 
             return $user;
         });
+    }
+
+    private function uploadDocuments(Company $company, array $documents): void
+    {
+        $documents = collect($documents)->map(function ($document) {
+
+            $tempPath = $document['file']->store('temp/documents', 'local');
+
+            return [
+                'temp_path' => $tempPath,
+                'file_name' => $document['file_name'],
+                'issue_date' => $document['issue_date'],
+                'expiry_date' => $document['expiry_date'],
+            ];
+        })->toArray();
+
+        UploadCompanyDocumentsJob::dispatch($company, $documents)
+            ->afterCommit();
     }
 }
