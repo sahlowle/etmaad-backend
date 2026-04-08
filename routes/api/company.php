@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\Company\CompanySettingsController;
 use App\Http\Controllers\Api\Company\CompanyTenderController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('company')->middleware(['auth:sanctum', 'role:company'])->group(function () {
+Route::prefix('company')->middleware(['auth:sanctum', 'role:company|company_manager'])->group(function () {
 
     Route::controller(CompanyTenderController::class)->group(function () {
         Route::get('tenders', 'index');
