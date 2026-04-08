@@ -13,8 +13,6 @@ class RequiredDocument extends Model
 
     protected $fillable = [
         'file_name',
-        'issue_date',
-        'expire_date',
         'type',
         'is_required',
     ];
@@ -22,8 +20,6 @@ class RequiredDocument extends Model
     protected function casts(): array
     {
         return [
-            'issue_date' => 'date',
-            'expire_date' => 'date',
             'is_required' => 'boolean',
         ];
     }

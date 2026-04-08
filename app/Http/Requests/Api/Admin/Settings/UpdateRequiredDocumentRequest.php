@@ -30,8 +30,6 @@ final class UpdateRequiredDocumentRequest extends BaseApiFormRequest
             'file_name' => ['sometimes', 'array', 'required_array_keys:ar,en'],
             'file_name.ar' => ['sometimes', 'string'],
             'file_name.en' => ['sometimes', 'string'],
-            'issue_date' => ['sometimes', 'date'],
-            'expire_date' => ['sometimes', 'date'],
             'type' => ['sometimes', 'string', Rule::in(RequiredDocumentTypeEnum::values())],
             'is_required' => ['sometimes', 'in:0,1'],
         ];
@@ -44,8 +42,6 @@ final class UpdateRequiredDocumentRequest extends BaseApiFormRequest
             'file_name.required_array_keys' => 'File name must have ar and en keys',
             'file_name.ar.required' => 'Arabic file name is required',
             'file_name.en.required' => 'English file name is required',
-            'issue_date.date' => 'Issue date must be a date',
-            'expire_date.date' => 'Expire date must be a date',
             'type.string' => 'Type must be a string',
             'type.in' => 'Type must be one of the following: '.implode(', ', RequiredDocumentTypeEnum::values()),
         ];

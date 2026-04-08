@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->json('file_name');
             $table->tinyInteger('is_required')->default(0);
-            $table->date('issue_date')->nullable();
-            $table->date('expire_date')->nullable();
             $table->string('type', 100); // company type: foods, retail, etc.
             $table->timestamps();
         });
