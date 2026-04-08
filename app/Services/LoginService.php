@@ -35,7 +35,7 @@ final class LoginService
             throw new InvalidCredentialsException;
         }
 
-        $this->authenticate($user);
+        // $this->authenticate($user);
 
         $token = $user->createToken($this->getCurrentDevice())->plainTextToken;
 
@@ -48,10 +48,10 @@ final class LoginService
     private function authenticate(User $user): void
     {
         match ($user->status) {
-            UserStatusesEnum::ACTIVE => null,
-            UserStatusesEnum::PENDING => throw new AccountPendingException,
-            UserStatusesEnum::INACTIVE => throw new AccountInactiveException,
-            UserStatusesEnum::BLOCKED => throw new AccountBlockedException,
+            UserStatusesEnum::ACTIVE->value => null,
+            UserStatusesEnum::PENDING->value => throw new AccountPendingException,
+            UserStatusesEnum::INACTIVE->value => throw new AccountInactiveException,
+            UserStatusesEnum::BLOCKED->value => throw new AccountBlockedException,
         };
     }
 
