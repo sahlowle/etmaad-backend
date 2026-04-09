@@ -7,7 +7,6 @@ use App\Actions\Auth\CreateUserAction;
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\StoreNewCompanyRequest;
 use App\Http\Requests\Api\StoreNewUserRequest;
-use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 
 class RegisterController extends BaseApiController
@@ -34,18 +33,8 @@ class RegisterController extends BaseApiController
 
         $companyData = $request->except('user');
 
-        // dd($companyData['documents'][0]);
+        $createCompanyAction->handle($userData, $companyData);
 
-        $user = $createCompanyAction->handle($userData, $companyData);
-
-        $token = $user->createToken('auth-token')->plainTextToken;
-
-        return $this->successResponse(
-            'Company registered successfully',
-            [
-                'token' => $token,
-                'user' => new UserResource($user->load('roles')),
-            ]
-        );
+        return $this->successResponse('Company registered successfully');
     }
 }

@@ -14,58 +14,18 @@ class CompanyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // Assuming the 'users' relationship is loaded (taking the first user)
-        $user = $this->users->first();
 
         return [
-            // بيانات حساب الدخول
-            'user' => [
-                'name' => $user->name ?? null,
-                'username' => $user->username ?? null,
-                'email' => $user->email ?? null,
-                'phone' => $user->phone_number ?? null, // Mapping phone_number from DB to 'phone'
-            ],
 
-            // Step 1: بيانات الشركة الأساسية
-            'basic_info' => [
-                'commercial_name' => $this->commercial_name,
-                'commercial_registration_number' => $this->commercial_registration_number,
-                'tax_number' => $this->tax_number,
-                'establishment_date' => $this->establishment_date,
-                'company_type_id' => $this->company_type_id,
-                'company_size' => $this->company_size,
-                'legal_representative_name' => $this->legal_representative_name,
-                'representative_national_id' => $this->representative_national_id,
-                'representative_nationality' => $this->representative_nationality,
-            ],
-
-            // Step 2: بيانات الاتصال والموقع
-            'contacts_info' => [
-                'primary_phone' => $this->primary_phone,
-                'secondary_phone' => $this->secondary_phone,
-                'official_email' => $this->official_email,
-                'website' => $this->website,
-            ],
-
-            'location_info' => [
-                'governorate_id' => $this->governorate_id,
-                'city_id' => $this->city_id,
-                'address' => $this->address,
-                'postal_code' => $this->postal_code,
-            ],
-
-            // Step 3: الوثائق الرسمية
+            'id' => $this->id,
+            'commercial_name' => $this->commercial_name,
+            'commercial_registration_number' => $this->commercial_registration_number,
+            'status' => $this->status,
+            'status_label' => $this->status->label(),
+            // 'created_at' => $this->created_at->format('Y-m-d'),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
-
-            // Step 4: التخصصات
             'activities' => ActivityResource::collection($this->whenLoaded('activities')),
-
-            // المعلومات المالية
-            'financial_info' => [
-                'paid_capital' => $this->paid_capital,
-                'annual_sales' => $this->annual_sales,
-                'company_brief' => $this->company_brief,
-            ],
         ];
+
     }
 }

@@ -9,10 +9,13 @@ use App\Enums\UserTypeEnum;
 use App\Jobs\UploadCompanyDocumentsJob;
 use App\Models\Company;
 use App\Models\User;
+use App\Services\CompanyService;
 use Illuminate\Support\Facades\DB;
 
 final readonly class CreateCompanyAction
 {
+    public function __construct(private CompanyService $companyService) {}
+
     public function handle(array $userData, array $companyData): User
     {
         return DB::transaction(function () use ($userData, $companyData): User {
@@ -34,6 +37,10 @@ final readonly class CreateCompanyAction
             $company->users()->attach($user->id);
 
             $user->assignRole(UserRolesEnum::COMPANY_MANAGER->value);
+
+            if (isset($companyData['activities_ids'])) {
+                $company->activities()->attach($companyData['activities_ids']);
+            }
 
             if (isset($companyData['documents'])) {
                 $this->uploadDocuments($company, $companyData['documents']);
@@ -57,7 +64,11 @@ final readonly class CreateCompanyAction
             ];
         })->toArray();
 
-        UploadCompanyDocumentsJob::dispatch($company, $documents)
-            ->afterCommit();
+        defer(function () use ($company, $documents): void {
+            $this->companyService->uploadDocuments($company, $documents);
+        });
+
+        // UploadCompanyDocumentsJob::dispatch($company, $documents)
+        //     ->afterCommit();
     }
 }

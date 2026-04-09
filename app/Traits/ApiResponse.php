@@ -14,11 +14,11 @@ trait ApiResponse
      * @param  mixed  $data
      * @return JsonResponse
      */
-    public function successResponse(string $message = 'Operation successful', $data = null, int $statusCode = 200)
+    public function successResponse(string $message = '', $data = null, int $statusCode = 200)
     {
         return response()->json([
             'success' => true,
-            'message' => $message,
+            'message' => $message ?: api_trans('success'),
             'data' => $data,
         ], $statusCode);
     }
@@ -111,11 +111,11 @@ trait ApiResponse
      * @param  LengthAwarePaginator  $paginator
      * @return JsonResponse
      */
-    public function paginatedResponse($paginator, string $message = 'Data retrieved successfully')
+    public function paginatedResponse($paginator, string $message = '')
     {
         return response()->json([
             'success' => true,
-            'message' => $message,
+            'message' => $message ?: api_trans('success'),
             'data' => $paginator->items(),
             'meta' => [
                 'current_page' => $paginator->currentPage(),

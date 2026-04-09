@@ -6,6 +6,13 @@ return [
     'not_found' => 'Not found.',
     'not_defined' => 'Not defined.',
 
+    'company' => [
+        'pending' => 'Pending',
+        'approved' => 'Approved',
+        'inactive' => 'Inactive',
+        'rejected' => 'Rejected',
+    ],
+
     'tender' => [
         'created' => 'Tender created successfully.',
         'updated' => 'Tender updated successfully.',

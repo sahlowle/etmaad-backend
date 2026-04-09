@@ -58,7 +58,7 @@ class StoreNewCompanyRequest extends BaseApiFormRequest
 
             // Step 4: التخصصات والنشاط التجاري
             'activities_ids' => ['required', 'array'],
-            'activities_ids.*' => ['exists:activities,id'],
+            'activities_ids.*' => ['required', 'exists:activities,id'],
 
             'financial_info' => ['required', 'array'],
             'financial_info.paid_capital' => ['nullable', 'numeric'],

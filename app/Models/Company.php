@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CompanyStatusesEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,6 +14,8 @@ class Company extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'status',
+
         // Step 1
         'commercial_name', // الاسم التجاري الرسمي
         'commercial_registration_number', // رقم السجل التجاري
@@ -40,6 +43,13 @@ class Company extends Model
         'annual_sales', // متوسط المبيعات السنوية
         'company_brief', // نبذة مختصرة
     ];
+
+    protected function casts()
+    {
+        return [
+            'status' => CompanyStatusesEnum::class,
+        ];
+    }
 
     public function documents(): HasMany
     {

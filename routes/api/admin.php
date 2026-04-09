@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\CompanyController;
 use App\Http\Controllers\Api\Admin\Settings\ActivityController;
 use App\Http\Controllers\Api\Admin\Settings\CityController;
 use App\Http\Controllers\Api\Admin\Settings\CompanyTypeController;
@@ -18,6 +19,14 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(functi
     Route::controller(TenderAttachmentController::class)->group(function () {
         Route::post('tenders/{tender}/attachments', 'upload');
         Route::delete('tenders/{tender}/attachments', 'destroy');
+    });
+
+    Route::controller(CompanyController::class)->prefix('companies')->group(function () {
+        Route::get('/', 'index');
+        Route::get('list-statuses', 'getStatuses');
+        Route::get('insights', 'getInsights');
+        Route::get('{company}', 'show')->whereNumber('company');
+        Route::post('{company}/change-status', 'changeStatus')->whereNumber('company');
     });
 
     Route::prefix('settings')->group(function () {
