@@ -38,6 +38,8 @@ class CompanyDetailsResource extends JsonResource
                 'legal_representative_name' => $this->legal_representative_name,
                 'representative_national_id' => $this->representative_national_id,
                 'representative_nationality' => $this->representative_nationality,
+                'status' => $this->status,
+                'status_label' => $this->status->label(),
             ],
 
             // Step 2: بيانات الاتصال والموقع
