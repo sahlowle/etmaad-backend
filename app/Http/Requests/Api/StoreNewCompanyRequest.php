@@ -41,7 +41,7 @@ class StoreNewCompanyRequest extends BaseApiFormRequest
             'contacts_info.primary_phone' => ['required', 'string'],
             'contacts_info.secondary_phone' => ['nullable', 'string'],
             'contacts_info.official_email' => ['required', 'email', 'unique:companies,official_email'],
-            'contacts_info.website' => ['nullable', 'url'],
+            'contacts_info.website' => ['nullable'],
 
             'location_info' => ['required', 'array'],
             'location_info.governorate_id' => ['required', 'exists:governorates,id'],

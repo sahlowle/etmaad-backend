@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Enums\CompanyStatusesEnum;
+use App\Enums\UserStatusesEnum;
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\Admin\ChangeCompanyStatusRequest;
 use App\Http\Resources\CompanyDetailsResource;
@@ -66,6 +67,12 @@ class CompanyController extends BaseApiController
         $company->update([
             'status' => $request->status,
         ]);
+
+        if ($request->status === CompanyStatusesEnum::APPROVED->value) {
+            $company->users()->update([
+                'status' => UserStatusesEnum::ACTIVE->value,
+            ]);
+        }
 
         return $this->successResponse();
     }

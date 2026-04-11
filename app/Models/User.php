@@ -5,9 +5,11 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use ALajusticia\Logins\Traits\HasLogins;
+use App\Enums\UserStatusesEnum;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -31,6 +33,7 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'status',
     ];
 
     protected $appends = ['role'];
@@ -58,6 +61,13 @@ class User extends Authenticatable
         ];
     }
 
+    public function makeActive()
+    {
+        $this->update([
+            'status' => UserStatusesEnum::ACTIVE->value,
+        ]);
+    }
+
     protected function role(): Attribute
     {
         return new Attribute(
@@ -65,14 +75,19 @@ class User extends Authenticatable
         );
     }
 
-    public function companies()
+    public function companies(): BelongsToMany
     {
         return $this->belongsToMany(Company::class);
     }
 
-    public function agencies()
+    public function agencies(): BelongsToMany
     {
         return $this->belongsToMany(Agency::class);
+    }
+
+    public function company(): ?Company
+    {
+        return $this->companies()->first();
     }
 
     public function isInactive(): bool

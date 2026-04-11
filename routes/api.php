@@ -20,7 +20,8 @@ Route::middleware('guest')->group(function () {
     });
 
     Route::controller(LoginController::class)->group(function () {
-        Route::post('login', 'login');
+        Route::post('admin/login', 'adminLogin');
+        Route::post('company/login', 'companyLogin');
     });
 });
 
