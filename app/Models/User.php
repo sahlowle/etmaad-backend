@@ -10,6 +10,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -75,6 +76,19 @@ class User extends Authenticatable
         );
     }
 
+    public function bookPurchases(): HasMany
+    {
+        return $this->hasMany(TenderBookPurchase::class);
+    }
+
+    // public function hasPurchasedTender(Tender $tender): bool
+    // {
+    //     return $this->bookPurchases()
+    //         ->where('tender_id', $tender->id)
+    //         ->paid()
+    //         ->exists();
+    // }
+
     public function companies(): BelongsToMany
     {
         return $this->belongsToMany(Company::class);
@@ -83,6 +97,11 @@ class User extends Authenticatable
     public function agencies(): BelongsToMany
     {
         return $this->belongsToMany(Agency::class);
+    }
+
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(TenderInquiry::class);
     }
 
     public function company(): ?Company

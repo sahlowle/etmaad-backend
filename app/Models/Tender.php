@@ -15,7 +15,7 @@ class Tender extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'tender_number', 'reference_number', 'purpose', 'booklet_price',
+        'name', 'tender_number', 'purpose', 'booklet_price',
         'status', 'execution_duration', 'requires_insurance', 'type',
         'tendering_status', 'government_entity', 'submission_method',
         'requires_initial_guarantee', 'initial_guarantee_address', 'final_guarantee_percentage',
@@ -51,6 +51,11 @@ class Tender extends Model
         return $this->hasMany(TenderAttachment::class);
     }
 
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(TenderInquiry::class);
+    }
+
     public function news(): HasOne
     {
         return $this->hasOne(TenderNews::class);
@@ -59,6 +64,19 @@ class Tender extends Model
     public function evaluation(): HasOne
     {
         return $this->hasOne(TenderEvaluation::class);
+    }
+
+    public function bookPurchases()
+    {
+        return $this->hasMany(TenderBookPurchase::class);
+    }
+
+    public function isPurchasedBy(User $user): bool
+    {
+        return $this->bookPurchases()
+            ->where('company_id', $user->company()->id)
+            ->paid()
+            ->exists();
     }
 
     #[Scope]
@@ -119,5 +137,15 @@ class Tender extends Model
     public function isCancelled(): bool
     {
         return $this->status->value === TenderStatusesEnum::CANCELLED->value;
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $lastId = self::max('id') + 1;
+            $num = 'TND-'.str_pad($lastId, 6, '0', STR_PAD_LEFT);
+            $model->reference_number = $num;
+            $model->tender_number = $num;
+        });
     }
 }

@@ -25,5 +25,7 @@ return [
         'published' => 'منشورة',
         'closed' => 'مغلقة',
         'cancelled' => 'ملغاة',
+        'not_purchased' => 'لم تقم بشراء هذه المنافسة.',
+        'already_purchased' => 'لقد قمت بشراء هذه المنافسة بالفعل.',
     ],
 ];

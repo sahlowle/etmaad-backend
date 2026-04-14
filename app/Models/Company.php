@@ -93,4 +93,17 @@ class Company extends Model
     {
         return $this->belongsToMany(Activity::class);
     }
+
+    public function bookPurchases(): HasMany
+    {
+        return $this->hasMany(TenderBookPurchase::class);
+    }
+
+    public function hasPurchasedTender(Tender $tender): bool
+    {
+        return $this->bookPurchases()
+            ->where('tender_id', $tender->id)
+            ->paid()
+            ->exists();
+    }
 }

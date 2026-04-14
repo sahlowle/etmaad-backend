@@ -90,7 +90,7 @@ trait ApiResponse
      * @param  mixed  $data
      * @return JsonResponse
      */
-    public function createdResponse($data = null, string $message = 'Resource created successfully')
+    public function createdResponse($data = null, string $message = '')
     {
         return $this->successResponse($message, $data, 201);
     }

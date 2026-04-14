@@ -9,12 +9,14 @@ use App\Http\Controllers\Api\Admin\Settings\NationalityController;
 use App\Http\Controllers\Api\Admin\Settings\RequiredDocumentController;
 use App\Http\Controllers\Api\Admin\TenderAttachmentController;
 use App\Http\Controllers\Api\Admin\TenderController;
+use App\Http\Controllers\Api\Admin\TenderInquiryController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::apiResource('tenders', TenderController::class);
     Route::post('tenders/{tender}/change-status', [TenderController::class, 'changeStatus']);
+    Route::post('inquiries/{inquiry}/reply', [TenderInquiryController::class, 'reply']);
 
     Route::controller(TenderAttachmentController::class)->group(function () {
         Route::post('tenders/{tender}/attachments', 'upload');

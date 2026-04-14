@@ -21,7 +21,7 @@ class TenderAttachmentResource extends JsonResource
             'file_name' => $this->file_name,
             'file_type' => $this->file_type,
             // 'file_size' => $this->file_size,
-            'file_url' => $this->file_path ? Storage::disk('public_uploads')->url($this->file_path) : null,
+            // 'file_url' => $this->file_path ? Storage::disk('public_uploads')->url($this->file_path) : null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -25,5 +25,7 @@ return [
         'published' => 'Published',
         'closed' => 'Closed',
         'cancelled' => 'Cancelled',
+        'not_purchased' => 'You have not purchased this tender.',
+        'already_purchased' => 'You have already purchased this tender.',
     ],
 ];
