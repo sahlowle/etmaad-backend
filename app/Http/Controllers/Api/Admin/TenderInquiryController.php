@@ -15,7 +15,7 @@ class TenderInquiryController extends BaseApiController
     public function index(Tender $tender): JsonResponse
     {
         $inquiries = $tender->inquiries()->with([
-            'company:id,name',
+            'company:id,commercial_name,commercial_registration_number',
             'user:id,name,email',
             'answeredBy:id,name,email',
         ])->latest()->paginate(10);

@@ -16,6 +16,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(functi
 
     Route::apiResource('tenders', TenderController::class);
     Route::post('tenders/{tender}/change-status', [TenderController::class, 'changeStatus']);
+    Route::get('tenders/{tender}/inquiries', [TenderInquiryController::class, 'index']);
     Route::post('inquiries/{inquiry}/reply', [TenderInquiryController::class, 'reply']);
 
     Route::controller(TenderAttachmentController::class)->group(function () {

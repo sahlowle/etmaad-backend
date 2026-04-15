@@ -18,7 +18,7 @@ class TenderInquiryResource extends JsonResource
             'id' => $this->id,
             'question' => $this->question,
             'answer' => $this->answer,
-            'answered_at' => $this->answered_at,
+            'answered_at' => $this->answered_at?->format('Y-m-d H:i:s'),
             'answered_by' => $this->answered_by,
             'user' => $this->whenLoaded('user'),
             'company' => $this->whenLoaded('company'),
