@@ -34,6 +34,10 @@ class TenderResourceDetailForCompany extends JsonResource
             'initial_guarantee_address' => $this->initial_guarantee_address,
             'final_guarantee_percentage' => $this->final_guarantee_percentage,
 
+            'is_inquiries_period_open' => $this->isInquiriesPeriodOpen(),
+
+            'inquiries' => InquiryResource::collection($this->whenLoaded('inquiries')),
+
             // Timestamps
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

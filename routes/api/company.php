@@ -10,7 +10,7 @@ Route::prefix('company')->middleware(['auth:sanctum', 'role:company_manager|comp
     Route::controller(CompanyTenderController::class)->group(function () {
         Route::get('tenders', 'index');
         Route::get('tenders/{tender}', 'show');
-        Route::post('tenders/{tender}/inquiries', 'submitInquiry');
+        Route::post('tenders/{tender}/inquiries', 'submitInquiry')->middleware(TenderPurchasedMiddleware::class);
     });
 
     Route::controller(TenderBookPurchaseController::class)->group(function () {

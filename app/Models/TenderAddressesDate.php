@@ -14,16 +14,19 @@ class TenderAddressesDate extends Model
         'offers_opening_location', 'opening_committee_members',
     ];
 
-    protected $casts = [
-        'inquiries_deadline' => 'datetime',
-        'offers_deadline' => 'datetime',
-        'offers_opening_date' => 'datetime',
-        'offers_examination_date' => 'datetime',
-        'expected_award_date' => 'date',
-        'execution_start_date' => 'date',
-        'qa_start_date' => 'datetime',
-        'qa_response_deadline' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'inquiries_deadline' => 'datetime',
+            'offers_deadline' => 'datetime',
+            'offers_opening_date' => 'datetime',
+            'offers_examination_date' => 'datetime',
+            'expected_award_date' => 'date',
+            'execution_start_date' => 'date',
+            'qa_start_date' => 'datetime',
+            'qa_response_deadline' => 'datetime',
+        ];
+    }
 
     public function tender(): BelongsTo
     {

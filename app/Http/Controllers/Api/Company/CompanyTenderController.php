@@ -25,17 +25,16 @@ class CompanyTenderController extends BaseApiController
 
     public function show(Tender $tender): JsonResponse
     {
-
         if ($tender->isNotPublished()) {
-            return $this->errorResponse(
-                message: 'Not Found',
-                statusCode: 404
-            );
+            return $this->errorResponse(message: 'Not Found', statusCode: 404);
         }
+
+        $company = auth()->user()->company();
 
         return $this->successResponse(
             data: new TenderResourceDetailForCompany($tender->load([
                 'addressesAndDates', 'classification', 'boqs', 'attachments', 'news', 'evaluation',
+                'inquiries' => fn ($query) => $query->where('company_id', $company->id),
             ])),
             message: api_trans('tender.retrieved'),
         );
@@ -43,6 +42,13 @@ class CompanyTenderController extends BaseApiController
 
     public function submitInquiry(SubmitInquiryRequest $request, Tender $tender, TenderInquiryService $service): JsonResponse
     {
+        if (! $tender->isInquiriesPeriodOpen()) {
+            return $this->errorResponse(
+                message: 'The inquiry period is not open.',
+                statusCode: 403
+            );
+        }
+
         $service->submit($tender, $request->user(), $request->validated('question'));
 
         return $this->createdResponse();

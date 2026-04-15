@@ -31,6 +31,14 @@ class Tender extends Model
         ];
     }
 
+    public function isInquiriesPeriodOpen(): bool
+    {
+        $start = $this->addressesAndDates?->qa_start_date;
+        $deadline = $this->addressesAndDates?->qa_response_deadline;
+
+        return $start && $deadline && today()->between($start, $deadline);
+    }
+
     public function addressesAndDates(): HasOne
     {
         return $this->hasOne(TenderAddressesDate::class);
