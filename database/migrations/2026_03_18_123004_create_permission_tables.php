@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserRolesEnum;
+use App\Enums\UserStatusesEnum;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -146,6 +147,7 @@ return new class extends Migration
             'password' => Hash::make('12345678'),
             'type' => $adminRole,
             'email_verified_at' => now(),
+            'status' => UserStatusesEnum::ACTIVE->value,
         ]);
 
         $admin->assignRole($adminRole);
