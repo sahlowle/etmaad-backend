@@ -34,7 +34,7 @@ class Tender extends Model
     public function isInquiriesPeriodOpen(): bool
     {
         $start = $this->addressesAndDates?->qa_start_date;
-        $deadline = $this->addressesAndDates?->qa_response_deadline;
+        $deadline = $this->addressesAndDates?->inquiries_deadline;
 
         return $start && $deadline && today()->between($start, $deadline);
     }

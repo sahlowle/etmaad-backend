@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Company;
 
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\Company\SubmitInquiryRequest;
-use App\Http\Resources\TenderResource;
-use App\Http\Resources\TenderResourceDetailForCompany;
+use App\Http\Resources\TenderDetailsForCompanyResource;
+use App\Http\Resources\TenderForCompanyResource;
 use App\Models\Tender;
 use App\Services\TenderInquiryService;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +18,7 @@ class CompanyTenderController extends BaseApiController
         $tenders = Tender::query()->published()->paginate(10);
 
         return $this->paginatedResponse(
-            paginator: TenderResource::collection($tenders)->resource,
+            paginator: TenderForCompanyResource::collection($tenders)->resource,
             message: api_trans('tender.retrieved'),
         );
     }
@@ -32,7 +32,7 @@ class CompanyTenderController extends BaseApiController
         $company = auth()->user()->company();
 
         return $this->successResponse(
-            data: new TenderResourceDetailForCompany($tender->load([
+            data: new TenderDetailsForCompanyResource($tender->load([
                 'addressesAndDates', 'classification', 'boqs', 'attachments', 'news', 'evaluation',
                 'inquiries' => fn ($query) => $query->where('company_id', $company->id),
             ])),

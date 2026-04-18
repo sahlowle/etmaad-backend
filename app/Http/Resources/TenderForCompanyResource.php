@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TenderResourceDetailForCompany extends JsonResource
+class TenderForCompanyResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -33,24 +33,20 @@ class TenderResourceDetailForCompany extends JsonResource
             'requires_initial_guarantee' => (bool) $this->requires_initial_guarantee,
             'initial_guarantee_address' => $this->initial_guarantee_address,
             'final_guarantee_percentage' => $this->final_guarantee_percentage,
-
             'is_inquiries_period_open' => $this->isInquiriesPeriodOpen(),
-
-            'inquiries' => InquiryResource::collection($this->whenLoaded('inquiries')),
-
+            'is_purchased' => $this->isPurchasedBy(auth()->user()),
             // Timestamps
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
-            // Relationships (Conditionally loaded to prevent N+1 queries)
-            'addresses_dates' => $this->whenLoaded('addressesAndDates'),
-            'classification' => $this->whenLoaded('classification'),
-            'boqs' => $this->whenLoaded('boqs'),
-            // 'attachments' => TenderAttachmentResource::collection($this->whenLoaded('attachments')),
-            'news' => $this->whenLoaded('news'),
-            'evaluation' => $this->whenLoaded('evaluation'),
+            // // Relationships (Conditionally loaded to prevent N+1 queries)
+            // 'addresses_dates' => $this->whenLoaded('addressesAndDates'),
+            // 'classification' => $this->whenLoaded('classification'),
+            // 'boqs' => $this->whenLoaded('boqs'),
+            // // 'attachments' => TenderAttachmentResource::collection($this->whenLoaded('attachments')),
+            // 'news' => $this->whenLoaded('news'),
+            // 'evaluation' => $this->whenLoaded('evaluation'),
 
-            'is_purchased' => $this->isPurchasedBy(auth()->user()),
         ];
     }
 }
