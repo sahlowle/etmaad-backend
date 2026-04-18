@@ -92,6 +92,13 @@ class Tender extends Model
             ->exists();
     }
 
+    public function isBidSubmittedBy(User $user): bool
+    {
+        return $this->bids()
+            ->where('company_id', $user->company()->id)
+            ->exists();
+    }
+
     #[Scope]
     public function published(Builder $query): void
     {

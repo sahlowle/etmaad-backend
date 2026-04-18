@@ -38,6 +38,10 @@ final class SubmitBidRequest extends BaseApiFormRequest
                 'required',
                 Rule::file()->types(['pdf'])->max(2048),
             ],
+
+            'items' => ['required', 'array'],
+            'items.*.tender_boq_id' => ['required', Rule::exists('tender_boqs', 'id')->where('tender_id', $this->route('tender')->id)],
+            'items.*.unit_price' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

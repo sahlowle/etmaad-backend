@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 if (! function_exists('api_trans')) {
@@ -28,5 +29,10 @@ if (! function_exists('generateSlug')) {
         }
 
         return $slug;
+    }
+
+    function file_url($path)
+    {
+        return Storage::disk('public_uploads')->url($path);
     }
 }

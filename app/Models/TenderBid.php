@@ -41,6 +41,11 @@ class TenderBid extends Model
         return $this->belongsTo(Tender::class);
     }
 
+    public function items()
+    {
+        return $this->hasMany(TenderBidItem::class);
+    }
+
     protected static function booted()
     {
         static::creating(function ($model) {
