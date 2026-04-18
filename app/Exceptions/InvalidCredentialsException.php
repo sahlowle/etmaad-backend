@@ -6,10 +6,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class InvalidCredentialsException extends BaseException
 {
-    protected $message = 'Invalid credentials';
-
     public function render(): JsonResponse
     {
-        return $this->unauthorizedResponse($this->message);
+        return $this->unauthorizedResponse(__('auth.invalid_credentials'));
     }
 }

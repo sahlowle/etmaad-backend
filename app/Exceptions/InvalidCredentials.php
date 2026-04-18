@@ -6,11 +6,9 @@ use Illuminate\Http\JsonResponse;
 
 class InvalidCredentials extends BaseException
 {
-    protected $message = 'Invalid credentials';
-
     public function render(): JsonResponse
     {
-        return $this->unauthorizedResponse($this->message);
+        return $this->unauthorizedResponse(__('auth.invalid_credentials'));
     }
 
     public function report() {}

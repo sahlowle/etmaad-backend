@@ -6,10 +6,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AccountPendingException extends BaseException
 {
-    protected $message = 'Your account is pending approval.';
-
     public function render(): JsonResponse
     {
-        return $this->forbiddenResponse($this->message);
+        return $this->forbiddenResponse(__('auth.account_pending'));
     }
 }

@@ -26,8 +26,6 @@ final class LoginService
     {
         $user = $this->resolveUser(UserTypeEnum::ADMIN, $credentials['username']);
 
-        $user->makeActive();
-
         $this->verifyPassword($credentials['password'], $user?->password);
 
         $this->verifyUserStatus($user);

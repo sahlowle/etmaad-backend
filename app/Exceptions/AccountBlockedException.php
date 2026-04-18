@@ -6,10 +6,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AccountBlockedException extends BaseException
 {
-    protected $message = 'Your account has been blocked.';
-
     public function render(): JsonResponse
     {
-        return $this->forbiddenResponse($this->message);
+        return $this->forbiddenResponse(__('auth.account_blocked'));
     }
 }

@@ -15,15 +15,15 @@ class CompanyProfileResource extends JsonResource
     public function toArray(Request $request): array
     {
         // Assuming the 'users' relationship is loaded (taking the first user)
-        $user = $this->users->first();
+        $owner = $this->users->first();
 
         return [
             // بيانات حساب الدخول
             'owner' => [
-                'name' => $user->name ?? null,
-                'username' => $user->username ?? null,
-                'email' => $user->email ?? null,
-                'phone' => $user->phone_number ?? null, // Mapping phone_number from DB to 'phone'
+                'name' => $owner->name ?? null,
+                'username' => $owner->username ?? null,
+                'email' => $owner->email ?? null,
+                'phone' => $owner->phone_number ?? null, // Mapping phone_number from DB to 'phone'
             ],
 
             // Step 1: بيانات الشركة الأساسية

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\Api\LoginRequest;
+use App\Http\Resources\LoginSessionResource;
 use App\Services\LoginService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -45,7 +46,7 @@ class LoginController extends BaseApiController
     {
         return $this->successResponse(
             'User sessions retrieved successfully',
-            $request->user()->logins()->get()
+            LoginSessionResource::collection($request->user()->logins()->get())
         );
     }
 
