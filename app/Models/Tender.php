@@ -39,6 +39,11 @@ class Tender extends Model
         return $start && $deadline && today()->between($start, $deadline);
     }
 
+    public function bids(): HasMany
+    {
+        return $this->hasMany(TenderBid::class);
+    }
+
     public function addressesAndDates(): HasOne
     {
         return $this->hasOne(TenderAddressesDate::class);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Company\CompanyProfileController;
+use App\Http\Controllers\Api\Company\CompanyTenderBidController;
 use App\Http\Controllers\Api\Company\CompanyTenderController;
 use App\Http\Controllers\Api\Company\TenderBookPurchaseController;
 use App\Http\Middleware\TenderPurchasedMiddleware;
@@ -22,6 +23,10 @@ Route::prefix('company')->middleware(['auth:sanctum', 'role:company_manager|comp
         Route::post('tenders/{tender}/purchase-book', 'purchaseBook');
         Route::get('tenders/{tender}/book', 'showBook')->middleware(TenderPurchasedMiddleware::class);
         Route::get('tenders/{tender}/attachments/{attachment}/download', 'downloadBook')->middleware(TenderPurchasedMiddleware::class);
+    });
+
+    Route::controller(CompanyTenderBidController::class)->group(function () {
+        Route::post('tenders/{tender}/bids', 'submitBid')->middleware(TenderPurchasedMiddleware::class);
     });
 
 });
