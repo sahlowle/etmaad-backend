@@ -37,6 +37,7 @@ final readonly class SubmitBidAction
                     'guarantee_amount' => $data['guarantee_amount'],
                     'guarantee_expiry' => $data['guarantee_expiry'],
                     'guarantee_file_path' => $guaranteePath,
+                    'submitted_at' => now(),
                 ]);
 
                 $items = collect($data['items']);
@@ -45,13 +46,15 @@ final readonly class SubmitBidAction
                 // instead of hydrating full Eloquent models
                 $boqQuantities = $tender->boqs()
                     ->whereIn('id', $items->pluck('tender_boq_id'))
-                    ->get(['id', 'quantity', 'name'])
+                    ->get(['id', 'quantity', 'item_name'])
                     ->keyBy('id');
+
+                // dd($boqQuantities);
 
                 $bidItems = $items->map(fn (array $item) => [
                     'tender_boq_id' => $item['tender_boq_id'],
                     'unit_price' => $item['unit_price'],
-                    'name' => $boqQuantities->get($item['tender_boq_id'])->name,
+                    'name' => $boqQuantities->get($item['tender_boq_id'])->item_name,
                     'total_price' => $boqQuantities->get($item['tender_boq_id'])->quantity * $item['unit_price'],
                 ])->toArray();
 

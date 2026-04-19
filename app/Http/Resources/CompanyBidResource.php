@@ -26,7 +26,10 @@ class CompanyBidResource extends JsonResource
             'submitted_at' => $this->submitted_at,
             'rejection_reason' => $this->rejection_reason,
             'status' => $this->status,
-            'tender' => new TenderResource($this->whenLoaded('tender')),
+            'status_label' => $this->status->label(),
+            'total_price' => $this->items->sum('total_price'),
+            'tender' => $this->whenLoaded('tender'),
+            'company' => $this->whenLoaded('company'),
             'items' => TenderBidItemResource::collection($this->whenLoaded('items')),
         ];
     }

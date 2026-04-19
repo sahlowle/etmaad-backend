@@ -28,4 +28,10 @@ return [
         'not_purchased' => 'You have not purchased this tender.',
         'already_purchased' => 'You have already purchased this tender.',
     ],
+
+    'tender_bid' => [
+        'under_review' => 'Under Review',
+        'accepted' => 'Accepted',
+        'rejected' => 'Rejected',
+    ],
 ];

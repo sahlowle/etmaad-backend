@@ -28,4 +28,10 @@ return [
         'not_purchased' => 'لم تقم بشراء هذه المنافسة.',
         'already_purchased' => 'لقد قمت بشراء هذه المنافسة بالفعل.',
     ],
+
+    'tender_bid' => [
+        'under_review' => 'قيد المراجعة',
+        'accepted' => 'مقبول',
+        'rejected' => 'مرفوض',
+    ],
 ];

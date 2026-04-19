@@ -26,8 +26,9 @@ Route::prefix('company')->middleware(['auth:sanctum', 'role:company_manager|comp
     });
 
     Route::controller(CompanyTenderBidController::class)->group(function () {
-        Route::get('tenders/{tender}/bids', 'index');
+        Route::get('bids', 'index');
         Route::post('tenders/{tender}/bids', 'submitBid')->middleware(TenderPurchasedMiddleware::class);
+        Route::get('tenders/{tender}/bid', 'show')->middleware(TenderPurchasedMiddleware::class);
     });
 
 });

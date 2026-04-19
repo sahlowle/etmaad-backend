@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\TenderBidStatusesEnum;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -20,11 +23,13 @@ class TenderBid extends Model
         'guarantee_file_path',
         'submitted_at',
         'rejection_reason',
+        'status',
     ];
 
     protected function casts(): array
     {
         return [
+            'status' => TenderBidStatusesEnum::class,
             'guarantee_amount' => 'decimal:2',
             'guarantee_expiry' => 'date',
             'submitted_at' => 'datetime',
@@ -44,6 +49,34 @@ class TenderBid extends Model
     public function items()
     {
         return $this->hasMany(TenderBidItem::class);
+    }
+
+    public function isAccepted(): bool
+    {
+        return $this->status === TenderBidStatusesEnum::ACCEPTED;
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === TenderBidStatusesEnum::REJECTED;
+    }
+
+    #[Scope]
+    public function accepted(Builder $query): void
+    {
+        $query->where('status', TenderBidStatusesEnum::ACCEPTED);
+    }
+
+    #[Scope]
+    public function rejected(Builder $query): void
+    {
+        $query->where('status', TenderBidStatusesEnum::REJECTED);
+    }
+
+    #[Scope]
+    public function underReview(Builder $query): void
+    {
+        $query->where('status', TenderBidStatusesEnum::UNDER_REVIEW);
     }
 
     protected static function booted()

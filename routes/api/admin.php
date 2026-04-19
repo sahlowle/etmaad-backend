@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Admin\Settings\GovernorateController;
 use App\Http\Controllers\Api\Admin\Settings\NationalityController;
 use App\Http\Controllers\Api\Admin\Settings\RequiredDocumentController;
 use App\Http\Controllers\Api\Admin\TenderAttachmentController;
+use App\Http\Controllers\Api\Admin\TenderBidController;
 use App\Http\Controllers\Api\Admin\TenderController;
 use App\Http\Controllers\Api\Admin\TenderInquiryController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,13 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(functi
     Route::controller(TenderAttachmentController::class)->group(function () {
         Route::post('tenders/{tender}/attachments', 'upload');
         Route::delete('tenders/{tender}/attachments', 'destroy');
+    });
+
+    Route::controller(TenderBidController::class)->group(function () {
+        Route::get('tenders/{tender}/bids', 'index');
+        Route::patch('bids/{tenderBid}/accept', 'accept');
+        Route::patch('bids/{tenderBid}/reject', 'reject');
+        Route::get('bids/{tenderBid}', 'show');
     });
 
     Route::controller(CompanyController::class)->prefix('companies')->group(function () {

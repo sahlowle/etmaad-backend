@@ -25,7 +25,7 @@ final class SubmitBidRequest extends BaseApiFormRequest
     public function rules(): array
     {
         return [
-            'technical_envelope_file_path' => [
+            'technical_envelope_file' => [
                 'required',
                 Rule::file()->types(['pdf'])->max(2048),
             ],
@@ -40,8 +40,12 @@ final class SubmitBidRequest extends BaseApiFormRequest
             ],
 
             'items' => ['required', 'array'],
-            'items.*.tender_boq_id' => ['required', Rule::exists('tender_boqs', 'id')->where('tender_id', $this->route('tender')->id)],
-            'items.*.unit_price' => ['required', 'numeric', 'min:0'],
+            'items.*.tender_boq_id' => [
+                'required',
+                'distinct',
+                Rule::exists('tender_boqs', 'id')->where('tender_id', $this->route('tender')->id),
+            ],
+            'items.*.unit_price' => ['required', 'numeric', 'min:1'],
         ];
     }
 }

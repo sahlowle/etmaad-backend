@@ -106,4 +106,9 @@ class Company extends Model
             ->paid()
             ->exists();
     }
+
+    public function bids(): HasMany
+    {
+        return $this->hasMany(TenderBid::class);
+    }
 }
