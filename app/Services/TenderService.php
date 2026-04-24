@@ -25,6 +25,17 @@ class TenderService
             ->paginate(10);
     }
 
+    public function underEvaluation(Request $request)
+    {
+        return Tender::query()
+            ->underEvaluation()
+            ->withCount('bids')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->whereLike('name', "%{$request->search}%");
+            })
+            ->paginate(10);
+    }
+
     /**
      * Upload tender attachments and save their records.
      * Handles both direct UploadedFile objects and pre-uploaded file arrays.

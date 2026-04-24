@@ -34,4 +34,8 @@ return [
         'accepted' => 'مقبول',
         'rejected' => 'مرفوض',
     ],
+
+    'bid_evaluation' => [
+        'technical_evaluation_required' => 'يجب إكمال التقييم الفني أولاً.',
+    ],
 ];

@@ -34,4 +34,8 @@ return [
         'accepted' => 'Accepted',
         'rejected' => 'Rejected',
     ],
+
+    'bid_evaluation' => [
+        'technical_evaluation_required' => 'Technical evaluation must be completed before financial evaluation.',
+    ],
 ];

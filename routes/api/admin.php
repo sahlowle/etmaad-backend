@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\BidEvaluationController;
 use App\Http\Controllers\Api\Admin\CompanyController;
 use App\Http\Controllers\Api\Admin\Settings\ActivityController;
 use App\Http\Controllers\Api\Admin\Settings\CityController;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
+    Route::get('tenders/under-evaluation', [TenderController::class, 'underEvaluation']);
     Route::apiResource('tenders', TenderController::class);
     Route::post('tenders/{tender}/change-status', [TenderController::class, 'changeStatus']);
     Route::get('tenders/{tender}/inquiries', [TenderInquiryController::class, 'index']);
@@ -30,6 +32,12 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(functi
         Route::patch('bids/{tenderBid}/accept', 'accept');
         Route::patch('bids/{tenderBid}/reject', 'reject');
         Route::get('bids/{tenderBid}', 'show');
+    });
+
+    Route::controller(BidEvaluationController::class)->group(function () {
+        Route::post('bids/{tenderBid}/technical-evaluate', 'technicalEvaluate');
+        Route::post('bids/{tenderBid}/financial-evaluate', 'financialEvaluate');
+        Route::get('tenders/{tender}/evaluations', 'index');
     });
 
     Route::controller(CompanyController::class)->prefix('companies')->group(function () {

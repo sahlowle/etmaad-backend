@@ -21,9 +21,9 @@ class TenderBookPurchaseController extends BaseApiController
             return $this->errorResponse(message: api_trans('tender.already_purchased'));
         }
 
-        $purchase = $tenderBookPurchaseService->purchase($tender, $user, ['payment_method' => 'online']);
+        $tenderBookPurchaseService->purchase($tender, $user, ['payment_method' => 'online']);
 
-        return $this->successResponse(data: $purchase);
+        return $this->successResponse();
     }
 
     public function showBook(Tender $tender): JsonResponse

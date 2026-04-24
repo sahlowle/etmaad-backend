@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TenderBid extends Model
 {
@@ -24,6 +25,8 @@ class TenderBid extends Model
         'submitted_at',
         'rejection_reason',
         'status',
+        'is_technical_evaluation_added',
+        'is_financial_evaluation_added',
     ];
 
     protected function casts(): array
@@ -33,6 +36,8 @@ class TenderBid extends Model
             'guarantee_amount' => 'decimal:2',
             'guarantee_expiry' => 'date',
             'submitted_at' => 'datetime',
+            'is_technical_evaluation_added' => 'boolean',
+            'is_financial_evaluation_added' => 'boolean',
         ];
     }
 
@@ -44,6 +49,11 @@ class TenderBid extends Model
     public function tender(): BelongsTo
     {
         return $this->belongsTo(Tender::class);
+    }
+
+    public function bidEvaluation(): HasOne
+    {
+        return $this->hasOne(BidEvaluation::class);
     }
 
     public function items()

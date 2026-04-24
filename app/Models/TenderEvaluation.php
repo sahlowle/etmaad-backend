@@ -8,8 +8,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class TenderEvaluation extends Model
 {
     protected $fillable = [
-        'tender_id', 'tech_level_1', 'tech_level_2', 'tech_level_3', 'technical_weight',
-        'fin_level_1', 'fin_level_2', 'fin_level_3', 'financial_weight',
+        'tender_id',
+        'tech_level_1_name',
+        'tech_level_1_percentage',
+        'tech_level_2_name',
+        'tech_level_2_percentage',
+        'tech_level_3_name',
+        'tech_level_3_percentage',
+        'technical_weight',
+        'technical_percentage_success',
+        'fin_level_1_name',
+        'fin_level_1_percentage',
+        'fin_level_2_name',
+        'fin_level_2_percentage',
+        'fin_level_3_name',
+        'fin_level_3_percentage',
+        'financial_weight',
+        'financial_percentage_success',
     ];
 
     public function tender(): BelongsTo

@@ -35,6 +35,9 @@ return new class extends Migration
 
             $table->string('status')->default(TenderBidStatusesEnum::UNDER_REVIEW->value);
 
+            $table->boolean('is_technical_evaluation_added')->default(false);
+            $table->boolean('is_financial_evaluation_added')->default(false);
+
             $table->timestamps();
             $table->softDeletes();
         });

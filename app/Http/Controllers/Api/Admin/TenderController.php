@@ -9,6 +9,7 @@ use App\Http\Requests\Api\Tender\StoreTenderRequest;
 use App\Http\Requests\Api\Tender\UpdateTenderRequest;
 use App\Http\Requests\Api\Tender\UpdateTenderStatusRequest;
 use App\Http\Resources\TenderResource;
+use App\Http\Resources\TenderUnderEvaluationResource;
 use App\Models\Tender;
 use App\Services\TenderService;
 use Illuminate\Http\JsonResponse;
@@ -22,6 +23,16 @@ class TenderController extends BaseApiController
 
         return $this->paginatedResponse(
             paginator: TenderResource::collection($tenders)->resource,
+            message: api_trans('tender.retrieved'),
+        );
+    }
+
+    public function underEvaluation(Request $request, TenderService $tenderService): JsonResponse
+    {
+        $tenders = $tenderService->underEvaluation($request);
+
+        return $this->paginatedResponse(
+            paginator: TenderUnderEvaluationResource::collection($tenders)->resource,
             message: api_trans('tender.retrieved'),
         );
     }

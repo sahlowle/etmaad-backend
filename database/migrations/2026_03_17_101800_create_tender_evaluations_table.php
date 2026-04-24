@@ -9,18 +9,26 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tender_evaluations', function (Blueprint $table) {
-            $table->id()->comment('المعرف الفريد');
-            $table->foreignId('tender_id')->constrained('tenders')->onDelete('cascade')->comment('معرف المنافسة');
+            $table->id();
+            $table->foreignId('tender_id')->constrained('tenders');
 
-            $table->string('tech_level_1')->nullable()->comment('Tab 7, Input 1: المستوى الأول الفني');
-            $table->string('tech_level_2')->nullable()->comment('Tab 7, Input 2: المستوى الثاني الفني');
-            $table->string('tech_level_3')->nullable()->comment('Tab 7, Input 3: المستوى الثالث الفني');
-            $table->integer('technical_weight')->default(70)->comment('Tab 7, Input 4: الوزن النوعي الفني (%)');
+            $table->string('tech_level_1_name')->nullable();
+            $table->integer('tech_level_1_percentage')->nullable();
+            $table->string('tech_level_2_name')->nullable();
+            $table->integer('tech_level_2_percentage')->nullable();
+            $table->string('tech_level_3_name')->nullable();
+            $table->integer('tech_level_3_percentage')->nullable();
+            $table->integer('technical_weight')->default(70);
+            $table->integer('technical_percentage_success');
 
-            $table->string('fin_level_1')->nullable()->comment('Tab 7, Input 5: المستوى الأول المالي');
-            $table->string('fin_level_2')->nullable()->comment('Tab 7, Input 6: المستوى الثاني المالي');
-            $table->string('fin_level_3')->nullable()->comment('Tab 7, Input 7: المستوى الثالث المالي');
-            $table->integer('financial_weight')->default(30)->comment('Tab 7, Input 8: الوزن النوعي المالي (%)');
+            $table->string('fin_level_1_name')->nullable();
+            $table->integer('fin_level_1_percentage')->nullable();
+            $table->string('fin_level_2_name')->nullable();
+            $table->integer('fin_level_2_percentage')->nullable();
+            $table->string('fin_level_3_name')->nullable();
+            $table->integer('fin_level_3_percentage')->nullable();
+            $table->integer('financial_weight')->default(30);
+            $table->integer('financial_percentage_success');
 
             $table->timestamps();
         });

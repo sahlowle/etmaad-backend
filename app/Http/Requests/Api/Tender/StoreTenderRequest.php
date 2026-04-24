@@ -97,14 +97,22 @@ final class StoreTenderRequest extends BaseApiFormRequest
 
             // Evaluation (Tab 7)
             'evaluation' => ['required', 'array'],
-            'evaluation.tech_level_1' => ['nullable', 'string', 'max:255'],
-            'evaluation.tech_level_2' => ['nullable', 'string', 'max:255'],
-            'evaluation.tech_level_3' => ['nullable', 'string', 'max:255'],
+            'evaluation.tech_level_1_name' => ['required', 'string', 'max:255'],
+            'evaluation.tech_level_1_percentage' => ['required', 'integer', 'min:0', 'max:100'],
+            'evaluation.tech_level_2_name' => ['required', 'string', 'max:255'],
+            'evaluation.tech_level_2_percentage' => ['required', 'integer', 'min:0', 'max:100'],
+            'evaluation.tech_level_3_name' => ['required', 'string', 'max:255'],
+            'evaluation.tech_level_3_percentage' => ['required', 'integer', 'min:0', 'max:100'],
             'evaluation.technical_weight' => ['required', 'integer', 'min:0', 'max:100'],
-            'evaluation.fin_level_1' => ['nullable', 'string', 'max:255'],
-            'evaluation.fin_level_2' => ['nullable', 'string', 'max:255'],
-            'evaluation.fin_level_3' => ['nullable', 'string', 'max:255'],
+            'evaluation.technical_percentage_success' => ['required', 'integer', 'min:0', 'max:100'],
+            'evaluation.fin_level_1_name' => ['required', 'string', 'max:255'],
+            'evaluation.fin_level_1_percentage' => ['required', 'integer', 'min:0', 'max:100'],
+            'evaluation.fin_level_2_name' => ['required', 'string', 'max:255'],
+            'evaluation.fin_level_2_percentage' => ['required', 'integer', 'min:0', 'max:100'],
+            'evaluation.fin_level_3_name' => ['required', 'string', 'max:255'],
+            'evaluation.fin_level_3_percentage' => ['required', 'integer', 'min:0', 'max:100'],
             'evaluation.financial_weight' => ['required', 'integer', 'min:0', 'max:100'],
+            'evaluation.financial_percentage_success' => ['required', 'integer', 'min:0', 'max:100'],
         ];
     }
 }

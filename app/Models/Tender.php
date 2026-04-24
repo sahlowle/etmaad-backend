@@ -129,6 +129,12 @@ class Tender extends Model
         $query->where('status', TenderStatusesEnum::CANCELLED->value);
     }
 
+    #[Scope]
+    public function underEvaluation(Builder $query): void
+    {
+        $query->whereHas('addressesAndDates', fn ($q) => $q->whereDate('offers_opening_date', '<=', today()));
+    }
+
     public function isPublished(): bool
     {
         return $this->status->value === TenderStatusesEnum::PUBLISHED->value;
