@@ -56,6 +56,11 @@ class TenderBid extends Model
         return $this->hasOne(BidEvaluation::class);
     }
 
+    public function tenderEvaluation(): HasOne
+    {
+        return $this->hasOne(TenderEvaluation::class, 'tender_id', 'tender_id');
+    }
+
     public function items()
     {
         return $this->hasMany(TenderBidItem::class);

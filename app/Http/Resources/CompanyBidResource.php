@@ -31,6 +31,7 @@ class CompanyBidResource extends JsonResource
             'tender' => $this->whenLoaded('tender'),
             'company' => $this->whenLoaded('company'),
             'items' => TenderBidItemResource::collection($this->whenLoaded('items')),
+            'tender_evaluation' => $this->whenLoaded('tenderEvaluation'),
         ];
     }
 }

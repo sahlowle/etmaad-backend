@@ -38,7 +38,7 @@ class TenderBidController extends BaseApiController
 
     public function show(TenderBid $tenderBid): JsonResponse
     {
-        $tenderBid->load(['items.tenderBoq', 'company:id,commercial_name,commercial_registration_number', 'tender:id,name,tender_number']);
+        $tenderBid->load(['items.tenderBoq', 'company:id,commercial_name,commercial_registration_number', 'tender:id,name,tender_number', 'tenderEvaluation']);
 
         return $this->successResponse(data: CompanyBidResource::make($tenderBid));
     }
